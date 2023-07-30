@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServicePiter";
+
+import "google/protobuf/empty.proto";
+
+service Accounter {
+  // Тест связи
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc SayHelloStream (stream HelloRequest) returns (stream HelloReply);
+  // Работники
+  rpc ListWorkers(google.protobuf.Empty) returns (ListReply);
+  rpc GetWorker(GetWorkerRequest) returns (WorkerReply);
+  rpc CreateWorker(CreateWorkerRequest) returns (Answer);
+  rpc UpdateWorker(UpdateWorkerRequest) returns (Answer);
+  rpc DeleteWorker(DeleteWorkerRequest) returns (Answer);
+}
+
+
+message HelloRequest {
+  string name = 1;
+}
+
+
+message HelloReply {
+  string message = 1;
+  StatusConnect status = 2;
+}
+
+enum StatusConnect {
+	OK = 0;
+	Fault = 1;
+	Unknown = 2;
+}
+
+message Answer {
+	int32 id = 1;
+	int32 code = 2;
+	string text = 3;
+}
+
+message CreateWorkerRequest {
+	WorkerReply worker = 1;
+}
+ 
+message GetWorkerRequest{
+  int32 id = 1;
+}
+ 
+message UpdateWorkerRequest{
+  	WorkerReply worker = 1;
+}
+ 
+message DeleteWorkerRequest{
+  int32 id = 1;
+}
+ 
+message ListReply{
+  repeated WorkerReply Workers = 1;
+}
+ 
+message WorkerReply{
+  int32 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string middleName = 4;
+  string birthDay = 5;
+  bool sex = 6;
+  bool haveChildren = 7;
+}
