@@ -84,15 +84,8 @@ async void Command2()
 // 2.2) получение одного объекта по id = 1
 async void Command3()
 {
-    try
-    {
-        WorkerReply worker2 = await client.GetWorkerAsync(new GetWorkerRequest { Id = 1 });
-        Console.WriteLine($"ID=1 -> {worker2.Id}. {worker2.FirstName} - {worker2.LastName} - {worker2.BirthDay}");
-    }
-    catch (RpcException ex)
-    {
-        Console.WriteLine(ex.Status.Detail);    // получаем статус ответа
-    }
+    WorkerReply worker2 = await client.GetWorkerAsync(new GetWorkerRequest { Id = 1 });
+    Console.WriteLine($"ID=1 -> {worker2.Id}. {worker2.FirstName} - {worker2.LastName} - {worker2.BirthDay}");
 }
 
 // 2.3) добавление одного объекта
@@ -108,16 +101,9 @@ async void Command4()
 // 2.4) обновление одного объекта - изменим имя у объекта с id = 1
 async void Command5()
 {
-    try
+    var answer2 = await client.UpdateWorkerAsync(new UpdateWorkerRequest
     {
-        var answer2 = await client.UpdateWorkerAsync(new UpdateWorkerRequest
-        {
-            Worker = new WorkerReply() { Id = 1, FirstName = $"D.A.R.Y.L {DateTime.Now}", BirthDay = DateTime.Now.ToLongDateString() }
-        });
-        Console.WriteLine($"UPDATE: ID = {answer2.Id} result = {answer2.Code}");
-    }
-    catch (RpcException ex)
-    {
-        Console.WriteLine(ex.Status.Detail);
-    }
+        Worker = new WorkerReply() { Id = 1, FirstName = $"D.A.R.Y.L {DateTime.Now}", BirthDay = DateTime.Now.ToLongDateString() }
+    });
+    Console.WriteLine($"UPDATE: ID = {answer2.Id} result = {answer2.Code}");
 }
